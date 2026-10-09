@@ -1,4 +1,5 @@
 import pygame
+from frog import Frog
 
 pygame.init()
 
@@ -18,6 +19,8 @@ state = MENU
 
 dt = 0
 
+frog = Frog(0, SCREEN_HEIGHT // 2, 50, 50)
+
 
 def draw_text(text, x, y):
     image = font.render(text, True, (255, 255, 255))
@@ -31,9 +34,18 @@ def main_menu():
 
 def game_running():
     screen.fill((110, 190, 210))
-    draw_text("GAME RUNNING", SCREEN_WIDTH // 2, 150)
-    draw_text("Gameplay goes here", SCREEN_WIDTH // 2, 230)
-    draw_text("Press ESC to end the run", SCREEN_WIDTH // 2, 310)
+    # draw_text("GAME RUNNING", SCREEN_WIDTH // 2, 150)
+    # draw_text("Gameplay goes here", SCREEN_WIDTH // 2, 230)
+    # draw_text("Press ESC to end the run", SCREEN_WIDTH // 2, 310)
+
+    # handle inputs
+    frog.handle_input(pygame.mouse.get_pos(), pygame.mouse.get_pressed())
+
+    # update game
+    frog.update(dt)
+
+    # render game
+    frog.render(screen)
 
 
 def game_over():
@@ -70,3 +82,5 @@ while running:
 
     pygame.display.flip()
     dt = clock.tick(60) / 1000
+
+pygame.quit()
