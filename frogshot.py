@@ -20,11 +20,9 @@ state = MENU
 
 dt = 0
 
-frog = Frog(0, SCREEN_HEIGHT - 50, 50, 50)
+frog = Frog(12, 12, 50, 50)
 
 platforms: list[Platform] = []
-platforms.append(Platform(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-
 
 def draw_text(text, x, y):
     image = font.render(text, True, (255, 255, 255))
@@ -77,10 +75,16 @@ while running:
     # Draw the current state
     if state == MENU:
         main_menu()
+        frog = Frog(12, 12, 50, 50)
+        platforms: list[Platform] = []
+        platforms.append(Platform(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
     elif state == PLAYING:
         handle_input()
         update_game(dt, platforms)
         render_game()
+
+        if frog.out_of_bounds == True:
+            state = GAME_OVER
     elif state == GAME_OVER:
         game_over()
 
