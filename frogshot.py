@@ -39,8 +39,8 @@ def main_menu():
 def handle_input():
     frog.handle_input(pygame.mouse.get_pos(), pygame.mouse.get_pressed())
 
-def update_game(dt):
-    frog.update(dt)
+def update_game(dt, platforms):
+    frog.update(dt, platforms)
 
 def render_game():
     screen.fill((110, 190, 210))
@@ -79,7 +79,7 @@ while running:
         main_menu()
     elif state == PLAYING:
         handle_input()
-        update_game(dt)
+        update_game(dt, platforms)
         render_game()
     elif state == GAME_OVER:
         game_over()

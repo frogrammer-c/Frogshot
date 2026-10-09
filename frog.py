@@ -6,6 +6,7 @@ class Frog():
         self.y = y
         self.width = width
         self.height = height
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.color: str = "green"
         self.tongue_target: tuple[int] | None = None
 
@@ -15,8 +16,11 @@ class Frog():
         else:
             self.tongue_target = None
             
-    def update(self, dt: float):
-         pass
+    def update(self, dt: float, platforms: list):
+        if self.tongue_target is not None:
+            for platform in platforms:
+                if platform.rect.clipline((self.x + self.width // 2, self.y + self.height // 2), self.tongue_target):
+                    print("HI")
 
     def render(self, screen):
         if self.tongue_target is not None:
