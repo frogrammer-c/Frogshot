@@ -1,5 +1,6 @@
 import pygame
 from frog import Frog
+from game_platform import Platform
 
 pygame.init()
 
@@ -19,7 +20,10 @@ state = MENU
 
 dt = 0
 
-frog = Frog(0, SCREEN_HEIGHT // 2, 50, 50)
+frog = Frog(0, SCREEN_HEIGHT - 50, 50, 50)
+
+platforms: list[Platform] = []
+platforms.append(Platform(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
 
 
 def draw_text(text, x, y):
@@ -32,21 +36,19 @@ def main_menu():
     draw_text("FROGSHOT", SCREEN_WIDTH // 2, 130)
     draw_text("Press ENTER to start", SCREEN_WIDTH // 2, 230)
 
-def game_running():
-    screen.fill((110, 190, 210))
-    # draw_text("GAME RUNNING", SCREEN_WIDTH // 2, 150)
-    # draw_text("Gameplay goes here", SCREEN_WIDTH // 2, 230)
-    # draw_text("Press ESC to end the run", SCREEN_WIDTH // 2, 310)
-
-    # handle inputs
+def handle_input():
     frog.handle_input(pygame.mouse.get_pos(), pygame.mouse.get_pressed())
 
-    # update game
+def update_game(dt):
     frog.update(dt)
 
-    # render game
-    frog.render(screen)
+def render_game():
+    screen.fill((110, 190, 210))
 
+    for platform in platforms:
+        platform.render(screen)
+
+    frog.render(screen)
 
 def game_over():
     screen.fill((65, 45, 55))
@@ -76,7 +78,9 @@ while running:
     if state == MENU:
         main_menu()
     elif state == PLAYING:
-        game_running()
+        handle_input()
+        update_game(dt)
+        render_game()
     elif state == GAME_OVER:
         game_over()
 
