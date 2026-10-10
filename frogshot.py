@@ -83,8 +83,8 @@ while running:
         update_game(dt, platforms)
         render_game()
 
-        if frog.out_of_bounds == True:
-            state = GAME_OVER
+        # if frog.out_of_bounds == True:
+        #     state = GAME_OVER
     elif state == GAME_OVER:
         game_over()
 
